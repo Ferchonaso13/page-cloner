@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Page Cloner</title>
+  <meta name="description" content="Paste a URL, get the page's HTML — optionally with every image bundled in." />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <main class="shell">
+    <header class="header">
+      <h1 class="title"><span class="title-accent">Page Cloner</span></h1>
+      <p class="subtitle">Paste a URL, get the page's HTML — optionally with every image bundled in.</p>
+    </header>
+
+    <section class="card" aria-label="Clone a page">
+      <form id="cloneForm" novalidate>
+        <div class="field">
+          <label class="label" for="urlInput">Page URL</label>
+          <input
+            id="urlInput"
+            class="input input-url"
+            type="url"
+            inputmode="url"
+            autocomplete="off"
+            spellcheck="false"
+            placeholder="https://example.com/landing-page"
+          />
+        </div>
+
+        <label class="checkbox-row" for="downloadImages">
+          <input id="downloadImages" class="checkbox" type="checkbox" />
+          <span class="checkbox-text">
+            <span class="checkbox-title">Download all images (bundle as a .zip)</span>
+            <span class="checkbox-help">Off = a single HTML file (images load from the original site). On = a .zip with the page + an images folder, fully offline.</span>
+          </span>
+        </label>
+
+        <details class="advanced">
+          <summary class="advanced-summary">Advanced</summary>
+          <div class="advanced-body">
+            <label class="label" for="proxyInput">Custom CORS proxy URL</label>
+            <input
+              id="proxyInput"
+              class="input"
+              type="text"
+              autocomplete="off"
+              spellcheck="false"
+              placeholder="https://your-worker.example.workers.dev/?url="
+            />
+            <p class="help">Optional. Leave blank to use the built-in public proxies. Paste a proxy that takes the target URL appended/encoded (e.g. your own Cloudflare Worker).</p>
+          </div>
+        </details>
+
+        <button id="cloneButton" class="btn-primary" type="submit">
+          <span id="cloneButtonLabel">Clone Page</span>
+        </button>
+      </form>
+    </section>
+
+    <section id="progressCard" class="card progress-card" aria-label="Progress log" hidden>
+      <h2 class="section-heading">Progress</h2>
+      <div id="progressLog" class="progress-log" role="log" aria-live="polite"></div>
+    </section>
+
+    <section id="errorBanner" class="error-banner" role="alert" hidden>
+      <span class="error-icon" aria-hidden="true">!</span>
+      <span id="errorMessage" class="error-message"></span>
+    </section>
+
+    <section id="resultsCard" class="card results-card" aria-label="Results" hidden>
+      <h2 class="section-heading">Done</h2>
+      <p class="result-title">
+        <span class="result-title-label">Title</span>
+        <span id="resultTitle" class="result-title-value"></span>
+      </p>
+      <p id="resultStats" class="result-stats" hidden></p>
+      <div class="downloads">
+        <button id="downloadHtmlBtn" class="btn-download" type="button">⬇ Download HTML</button>
+        <button id="downloadZipBtn" class="btn-download" type="button" hidden>⬇ Download ZIP (HTML + images)</button>
+      </div>
+    </section>
+
+    <footer class="footer">Runs entirely in your browser. No server, no tracking.</footer>
+  </main>
+
+  <script src="vendor/jszip.min.js"></script>
+  <script src="js/clone-core.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
