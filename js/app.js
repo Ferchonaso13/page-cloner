@@ -5,7 +5,6 @@
   const form = document.getElementById("cloneForm");
   const urlInput = document.getElementById("urlInput");
   const downloadImagesCheckbox = document.getElementById("downloadImages");
-  const proxyInput = document.getElementById("proxyInput");
   const cloneButton = document.getElementById("cloneButton");
   const cloneButtonLabel = document.getElementById("cloneButtonLabel");
 
@@ -166,7 +165,6 @@
 
     const url = urlInput.value.trim();
     const downloadImages = downloadImagesCheckbox.checked;
-    const customProxy = proxyInput.value.trim();
 
     clearError();
     clearResults();
@@ -189,7 +187,6 @@
     try {
       const result = await window.Cloner.clonePage(url, {
         downloadImages: downloadImages,
-        proxyOverride: customProxy || undefined,
         onProgress: appendLog,
       });
 
