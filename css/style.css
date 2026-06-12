@@ -19,6 +19,12 @@
   box-sizing: border-box;
 }
 
+/* The `hidden` attribute must win over class-level `display` rules
+   (.error-banner, .results-card, etc. all set display:flex). */
+[hidden] {
+  display: none !important;
+}
+
 html,
 body {
   margin: 0;
