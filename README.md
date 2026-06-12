@@ -1,6 +1,6 @@
 # Page Cloner
 
-Live app: **https://&lt;your-username&gt;.github.io/page-cloner/**
+Live app: **https://ferchonaso13.github.io/page-cloner/**
 
 ## What it is
 
@@ -8,7 +8,7 @@ Page Cloner is a free, no-install tool that lets you save a copy of almost any w
 
 ## How to use it
 
-1. Open the app: **https://&lt;your-username&gt;.github.io/page-cloner/**
+1. Open the app: **https://ferchonaso13.github.io/page-cloner/**
 2. Paste the full address (URL) of the page you want to copy into the box — for example, `https://example.com/some-page`.
 3. (Optional) Tick the **Download all images** checkbox if you want every image saved alongside the page.
 4. Click **Clone Page** and wait a few seconds while it fetches the page.
@@ -31,7 +31,7 @@ That's it. Open the downloaded file anytime to view your saved page.
 
 ## If it doesn't work
 
-Because of the way browsers protect you, this tool can't reach other websites directly — it has to pass requests through a helper service (called a "CORS proxy"). Most of the time this is invisible and just works, but a few things can trip it up:
+Because of the way browsers protect you, this tool can't reach other websites directly — it passes requests through a small helper service (a "proxy"). This tool uses a dedicated, reliable proxy, so it almost always just works. If a particular page won't clone:
 
 - **Some sites block the public helper.** If a clone fails, simply **try again** — a different helper is used automatically and often succeeds on a second attempt.
 - **Big pages can be slow.** The free public helper can take a while (sometimes 20–60 seconds) for large or image-heavy pages. Give it a moment before assuming it's stuck.
