@@ -812,9 +812,10 @@ video:not([src]):not(:has(source[src])) {
   // (locked to this app's origin) that reliably proxies both pages AND binary
   // images — the public proxies below are fallbacks only and frequently fail on
   // image downloads, so they should rarely be reached.
+  // Checked 2026-08-06: corsproxy.io now hard-403s unregistered origins and was
+  // removed. allorigins/codetabs are flaky (frequent 5xx) and are last-resort only.
   const PROXIES = [
     (u) => 'https://page-cloner-proxy.ferchonaso.workers.dev/?url=' + encodeURIComponent(u),
-    (u) => 'https://corsproxy.io/?url=' + encodeURIComponent(u),
     (u) => 'https://api.allorigins.win/raw?url=' + encodeURIComponent(u),
     (u) => 'https://api.codetabs.com/v1/proxy/?quest=' + u,
   ];
@@ -881,8 +882,9 @@ video:not([src]):not(:has(source[src])) {
     }
 
     throw new Error(
-      'All CORS proxies failed — the site may block proxies. ' +
-      'Try a different proxy in Advanced settings.' +
+      'Could not fetch that page. Either the site blocks automated requests, ' +
+      'or this copy of Page Cloner is running on a web address the proxy does not ' +
+      'recognise (open it from its official link).' +
       (lastError ? ` (last error: ${lastError.message})` : '')
     );
   }
@@ -1134,10 +1136,9 @@ video:not([src]):not(:has(source[src])) {
       const res = await proxiedFetch(finalUrl, { proxyOverride });
       rawHtml = res.text;
     } catch (err) {
-      throw new Error(
-        'All CORS proxies failed — the site may block proxies. ' +
-        'Try a different proxy in Advanced settings.'
-      );
+      // Surface the real reason — proxiedFetch already builds a readable message
+      // including the last proxy error. Swallowing it here hid the actual cause.
+      throw new Error('Could not load ' + finalUrl + ' — ' + (err && err.message ? err.message : err));
     }
 
     // 2. Strip trackers, fix relative URLs → absolute.
